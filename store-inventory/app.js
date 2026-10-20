@@ -1,6 +1,7 @@
 class HashTable {
     constructor(size) {
         this.buckets = new Array(size);
+        this.count = 0;
 
         for (let i = 0; i < size; i++) {
             this.buckets[i] = [];
@@ -29,6 +30,12 @@ class HashTable {
             }
         }
         bucket.push({ key, value });
+        this.count++;
+
+        const loadFactor = this.count / this.buckets.length;
+        if (loadFactor > 0.75) {
+            this.resize();
+        }
     }
 
     get(key) {
@@ -59,10 +66,26 @@ class HashTable {
         for (let i = 0; i < bucket.length; i++) {
             if (bucket[i].key === key) {
                 bucket.splice(i, 1);
+                this.count--;
                 return true;
             }
         }
         return false;
+    }
+    
+    resize() {
+        const oldBuckets = this.buckets;
+        this.buckets = new Array(oldBuckets.length * 2);
+        this.count = 0;
+        for (let i = 0; i < this.buckets.length; i++) {
+            this.buckets[i] = [];
+        }
+        for (const bucket of oldBuckets) {
+            for (const item of bucket) {
+                this.set(item.key, item.value);
+            }
+        }
+        console.log(`HashTable resized from ${oldBuckets.length} buckets to ${this.buckets.length} buckets`);
     }
 }
 
@@ -98,11 +121,16 @@ const webcam = {
     quantity: 20
 };
 
+const ba = {
+    name: "collision test"
+};
+
 console.assert(inventory.set("mouse", mouse) === undefined, "Failed to add mouse to inventory");
 console.assert(inventory.set("keyboard", keyboard) === undefined, "Failed to add keyboard to inventory");
 console.assert(inventory.set("monitor", monitor) === undefined, "Failed to add monitor to inventory");
 console.assert(inventory.set("headphones", headphones) === undefined, "Failed to add headphones to inventory");
 console.assert(inventory.set("webcam", webcam) === undefined, "Failed to add webcam to inventory");
+console.assert(inventory.set("ba", ba) === undefined, "Failed to add ba to inventory");
 console.log("Inventory items added:", inventory.buckets);
 
 console.assert(inventory.get("mouse") === mouse, "Failed to retrieve mouse from inventory");
@@ -114,5 +142,7 @@ console.log("Updated item in inventory:", inventory.get("mouse"));
 
 console.assert(inventory.has("keyboard") === true, "Failed to check existence of keyboard in inventory");
 
-console.assert(inventory.delete("monitor") === true, "Failed to delete monitor from inventory");
-console.log("Inventory after deleting monitor:", inventory.buckets);
+console.assert(inventory.delete("ba") === true, "Failed to delete ba from inventory");
+console.log("Inventory after deleting ba:", inventory.buckets);
+
+console.log("Final Summary: The store used a hash table to store products by their names as keys. The hash function converts the keys into indices for the array of buckets. A bucket is a place in the hashtable where key value pairs can be stored. When a collision occurs the hashtable uses seperate chaining to store both pairs in the same bucket. When the load factor exceeds 0.75vthe hashtable is resized to maintain fast search times.")
