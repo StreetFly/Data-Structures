@@ -48,3 +48,26 @@ const orders = [
         priority: 3
     }
 ];
+
+const bubbleSortByTotal = (orders) => {
+    let swapCount = 0
+    let comparisonCount = 0;
+    let swapping = true;
+
+    while (swapping) {
+        swapping = false;
+        for (let i = 0; i < orders.length - 1; i++) {
+            comparisonCount++;
+            if (orders[i].total > orders[i + 1].total) {
+                [orders[i], orders[i + 1]] = [orders[i + 1], orders[i]];
+                swapCount++;
+                swapping = true;
+            }
+        }
+    }
+    console.log(`Swapped ${swapCount} times`);
+    console.log(`Compared ${comparisonCount} times`);
+    return orders;
+};
+console.log(bubbleSortByTotal(orders));
+
