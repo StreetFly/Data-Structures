@@ -49,25 +49,65 @@ const orders = [
     }
 ];
 
-const bubbleSortByTotal = (orders) => {
+function bubbleSortByTotal(arr) {
     let swapCount = 0
     let comparisonCount = 0;
     let swapping = true;
 
     while (swapping) {
         swapping = false;
-        for (let i = 0; i < orders.length - 1; i++) {
+        for (let i = 0; i < arr.length - 1; i++) {
             comparisonCount++;
-            if (orders[i].total > orders[i + 1].total) {
-                [orders[i], orders[i + 1]] = [orders[i + 1], orders[i]];
+            if (arr[i].total > arr[i + 1].total) {
+                [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
                 swapCount++;
                 swapping = true;
             }
         }
     }
-    console.log(`Swapped ${swapCount} times`);
-    console.log(`Compared ${comparisonCount} times`);
-    return orders;
+    return { swapCount, comparisonCount, arr };
 };
-console.log(bubbleSortByTotal(orders));
+console.log(`Bubble Sort Result: json${JSON.stringify(bubbleSortByTotal([...orders]))}`);
+
+function selectionSortByTotal(arr) {
+    let swapCount = 0;
+    let comparisonCount = 0;
+    for (let i = 0; i < arr.length - 1; i++) {
+        let minIndex = i;
+
+        for (let j = i + 1; j < arr.length; j++) {
+            comparisonCount++;
+            if (arr[j].total < arr[minIndex].total) {
+                minIndex = j;
+            }
+        }
+
+        if (minIndex !== i) {
+            [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];
+            swapCount++;
+        }
+    }
+
+    return { swapCount, comparisonCount, arr };
+};
+console.log(`Selection Sort Result: json${JSON.stringify(selectionSortByTotal([...orders]))}`);
+
+function insertionSortByTotal(arr) {
+    let swapCount = 0;
+    let comparisonCount = 0;
+    for (let i = 1; i < arr.length; i++) {
+        let current = arr[i];
+        let j = i - 1;
+
+        while (j >= 0 && arr[j].total > current.total) {
+            comparisonCount++;
+            arr[j + 1] = arr[j];
+            swapCount++;
+            j--;
+        }
+        arr[j + 1] = current;
+    }
+    return { swapCount, comparisonCount, arr };
+}
+console.log(`Insertion Sort Result: json${JSON.stringify(insertionSortByTotal([...orders]))}`)
 
