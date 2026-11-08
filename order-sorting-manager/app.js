@@ -48,7 +48,7 @@ const orders = [
         priority: 3
     }
 ];
-
+// Bubble sort time complexity: O(n^2) in all cases
 function bubbleSortByTotal(arr) {
     let swapCount = 0
     let comparisonCount = 0;
@@ -69,6 +69,7 @@ function bubbleSortByTotal(arr) {
 };
 console.log(`Bubble Sort Result: json${JSON.stringify(bubbleSortByTotal([...orders]))}`);
 
+// Selection sort time complexity: O(n^2) in all cases
 function selectionSortByTotal(arr) {
     let swapCount = 0;
     let comparisonCount = 0;
@@ -92,6 +93,7 @@ function selectionSortByTotal(arr) {
 };
 console.log(`Selection Sort Result: json${JSON.stringify(selectionSortByTotal([...orders]))}`);
 
+// Insertion sort time complexity: O(n^2) in worst case, O(n) in best case
 function insertionSortByTotal(arr) {
     let swapCount = 0;
     let comparisonCount = 0;
@@ -110,4 +112,8 @@ function insertionSortByTotal(arr) {
     return { swapCount, comparisonCount, arr };
 }
 console.log(`Insertion Sort Result: json${JSON.stringify(insertionSortByTotal([...orders]))}`)
+
+/* In this sample array Insertion sort makes the fewest comparisons with only 14 comparisons.
+Selection sort made the fewest swaps with 6 swaps.
+*/
 
