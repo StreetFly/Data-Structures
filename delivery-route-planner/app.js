@@ -32,10 +32,20 @@ const deliveryGraph = new Graph();
 deliveryGraph.addLocation("Warehouse");
 deliveryGraph.addLocation("Downtown");
 deliveryGraph.addLocation("Airport");
+deliveryGraph.addLocation("North Station");
+deliveryGraph.addLocation("Shopping Center");
+deliveryGraph.addLocation("University");
+deliveryGraph.addLocation("Hospital");
 
 console.log('deliveryGraph after adding locations:', deliveryGraph);
 
 deliveryGraph.addRoad("Warehouse", "Downtown");
 deliveryGraph.addRoad("Warehouse", "Airport");
+deliveryGraph.addRoad("Shopping Center", "Downtown");
+deliveryGraph.addRoad("University", "Hospital");
+deliveryGraph.addRoad("University", "Downtown");
+deliveryGraph.addRoad("Airport", "North Station");
+deliveryGraph.addRoad("Hospital", "North Station");
+deliveryGraph.addRoad("Hospital", "Shopping Center");
 
 console.log('deliveryGraph after adding roads:', deliveryGraph);
