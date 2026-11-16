@@ -26,6 +26,24 @@ class Graph {
 
         return true;
     }
+
+    hasLocation(location) {
+        return this.adjacencyList.has(location);
+    }
+
+    hasRoad(locationA, locationB) {
+        if (!this.adjacencyList.has(locationA) || !this.adjacencyList.has(locationB)) {
+            return false;
+        }
+        return this.adjacencyList.get(locationA).includes(locationB);
+    }
+
+    getConnections(location) {
+        if (!this.adjacencyList.has(location)) {
+            return [];
+        }
+        return this.adjacencyList.get(location);
+    }
 }
 
 const deliveryGraph = new Graph();
@@ -49,3 +67,10 @@ deliveryGraph.addRoad("Hospital", "North Station");
 deliveryGraph.addRoad("Hospital", "Shopping Center");
 
 console.log('deliveryGraph after adding roads:', deliveryGraph);
+
+console.log(deliveryGraph.hasLocation("Warehouse")); // true
+console.log(deliveryGraph.hasLocation("Mall")); // false
+console.log(deliveryGraph.hasRoad("Warehouse", "Downtown")); // true
+console.log(deliveryGraph.hasRoad("Warehouse", "Mall")); // false
+console.log(deliveryGraph.getConnections("University")); // ["Hospital", "Downtown"]
+console.log(deliveryGraph.getConnections("Mall")); // []
